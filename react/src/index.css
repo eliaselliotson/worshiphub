@@ -1,3 +1,26 @@
 body {
+  padding: min(5vw, 50px);
+  --bs-border-radius: 2em;
+}
+
+.card {
+  --bs-card-border-radius: 0.5rem;
+}
+
+#content .preview section {
+  margin: 10px;
+  font-family: Courier, monospace;
+}
+
+#content .preview section span hr {
+  outline: none;
+  border: none;
+  transition-duration: 200ms;
   margin: 0px;
+  opacity: 0;
+  border-bottom: 4px dashed #0d6efd;
+}
+
+#content .preview section span:hover hr {
+  opacity: 1;
 }
