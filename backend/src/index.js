@@ -1,7 +1,16 @@
 import { Hono } from 'hono'
+import { cors } from 'hono/cors'
 import { Providers } from "./providers/index.js";
 
 const app = new Hono()
+
+// Enable universal CORS for all routes
+app.use('*', cors({
+  origin: '*', // Allow all origins
+  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  maxAge: 86400, // Cache preflight response for 24 hours
+}))
 
 // Search API route
 app.get('/search', async (c) => {
@@ -11,7 +20,7 @@ app.get('/search', async (c) => {
 
     return c.json(results)
   } catch(e) {
-    return c.text(e.message);
+    return c.text(e.message, 500);
   }
 })
 
@@ -23,7 +32,7 @@ app.get('/import', async (c) => {
 
     return c.json(results)
   } catch(e) {
-    return c.text(e.message);
+    return c.text(e.message, 500);
   }
 })
 
