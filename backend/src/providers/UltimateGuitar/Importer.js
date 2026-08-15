@@ -17,6 +17,7 @@ export class UltimateGuitarImporter {
       src: tabData?.tab?.tab_url,
       tabId: tabData?.tab?.id,
       tabName: tabData?.tab?.song_name,
+      key: tabData?.tab_view?.versions[tabData?.tab?.version - 1].tonality_name,
       artist: tabData?.tab?.artist_name,
       artistUrl: tabData?.tab?.artist_url,
       uploader: tabData?.tab?.username,
