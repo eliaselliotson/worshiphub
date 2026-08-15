@@ -8,4 +8,8 @@ export class Providers {
   static async load(url) {
     return { ...(await UltimateGuitar.load(url)), type: UltimateGuitar.id };
   }
+
+  static canLoad(url) {
+    return UltimateGuitar.canLoad(url);
+  }
 }

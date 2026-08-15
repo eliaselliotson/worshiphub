@@ -16,6 +16,11 @@ app.use('*', cors({
 app.get('/search', async (c) => {
   try {
     const query = c.req.query()?.query;
+
+    if (Providers.canLoad(query)) {
+      return c.json(true)
+    }
+
     const results = await Providers.search(query);
 
     return c.json(results)
