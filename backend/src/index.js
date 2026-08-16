@@ -16,14 +16,14 @@ app.use('*', cors({
 app.get('/search', async (c) => {
   try {
     const query = c.req.query()?.query;
+    const canLoad = Providers.canLoad(query);
 
-    if (Providers.canLoad(query)) {
-      return c.json(true)
+    if (canLoad) {
+      return c.json(canLoad)
+    } else {
+      const results = await Providers.search(query);
+      return c.json(results)
     }
-
-    const results = await Providers.search(query);
-
-    return c.json(results)
   } catch(e) {
     return c.text(e.message, 500);
   }

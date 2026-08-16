@@ -10,6 +10,6 @@ export class Providers {
   }
 
   static canLoad(url) {
-    return UltimateGuitar.canLoad(url);
+    return UltimateGuitar.canLoad(url) === true ? "ultimateguitar" : undefined;
   }
 }
