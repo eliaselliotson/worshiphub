@@ -15,7 +15,6 @@ class UltimateGuitar {
   }
   
   static canLoad(url) {
-    console.log(this.urlPattern);
     return this.urlPattern.test(url);
   }
 }

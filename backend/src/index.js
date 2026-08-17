@@ -25,6 +25,7 @@ app.get('/search', async (c) => {
       return c.json(results)
     }
   } catch(e) {
+    console.error(e);
     return c.text(e.message, 500);
   }
 })
