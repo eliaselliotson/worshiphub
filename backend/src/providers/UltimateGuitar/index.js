@@ -2,7 +2,7 @@ import { UltimateGuitarImporter } from "./Importer.js";
 import { UltimateGuitarSearch } from "./Search.js";
 
 class UltimateGuitar {
-  static urlPattern = /^https:\/\/tabs\.ultimate-guitar\.com\/tab\/.*\/[^0-9]*[0-9]+$/m;
+  static urlPattern = /^https:\/\/tabs\.ultimate-guitar\.com\/tab\/.*$/m;
   static id = "ultimateguitar";
   static name = "Ultimate Guitar";
 
