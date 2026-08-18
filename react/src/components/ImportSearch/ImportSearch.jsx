@@ -67,7 +67,7 @@ export default function ImportSearch({ onSelect }) {
   }))
 
   return <>
-    <Flex vertical style={{ width: '100%' }}>
+    <Flex vertical style={{ width: '100%', flex: '1' }}>
       <Input
         size="medium"
         prefix={<SearchOutlined />}

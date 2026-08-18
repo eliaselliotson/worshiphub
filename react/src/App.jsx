@@ -1,10 +1,20 @@
-import HomePage from "./HomePage.jsx";
+import MainLayout from "./components/MainLayout/MainLayout.jsx";
+import { ConfigProvider } from "antd";
 
 function App() {
   return (
-    <>
-      <HomePage />
-    </>
+    <ConfigProvider
+      theme={{
+        components: {
+          Listy: {
+            itemPaddingBlock: 4,
+            itemPaddingInline: 16,
+          },
+        },
+      }}
+    >
+      <MainLayout />
+    </ConfigProvider>
   )
 }
 
