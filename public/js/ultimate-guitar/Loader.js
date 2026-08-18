@@ -10,22 +10,13 @@ class UltimateGuitarLoader {
   static jsonEndMarker = '"></div>';
 
   /**
-   * Generates a CORS Proxy url for any given url, to bypass CORS restrictions
-   * @param {string} url The url to generate a CORS Proxy url for
-   * @returns {string} The generated CORS Proxy url
-   */
-  static proxyUrl(url) {
-    return `https://corsproxy.io/?url=${url}`;
-  }
-
-  /**
    * Loads raw HTML from a given url
    * @param {string} url The url to load raw HTML from
    * @returns {string} The raw HTML loaded from the url
    * @async
    */
   static async loadRawData(url) {
-    return await (await fetch(this.proxyUrl(url))).text();
+    return await (await fetch(url)).text();
   }
 
   /**

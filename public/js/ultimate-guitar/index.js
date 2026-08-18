@@ -12,7 +12,7 @@ class UltimateGuitar {
     return await UltimateGuitarImporter.load(url);
   }
   
-  static isUrlValid(url) {
+  static canImportUrl(url) {
     return this.urlPattern.test(url);
   }
 }
