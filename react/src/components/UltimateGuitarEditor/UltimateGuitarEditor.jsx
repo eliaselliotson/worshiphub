@@ -5,9 +5,9 @@ import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 const { Title, Text, Link } = Typography;
 
 function SongLyric({ text, chords }) {
-  return <Text>
-    <span>{text}</span>
-    {chords.map(e => <span><Text keyboard>{e.text}</Text> {e.pos}</span>)}
+  return <Text style={{ position: "relative" }}>
+    {chords.map(e => <Text color="primary" style={{ width: 'auto', position: "absolute", left: e.pos * 10 }} keyboard>{e.text}</Text>)}
+    {text}
     </Text>
 }
 
