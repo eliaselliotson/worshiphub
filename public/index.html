@@ -30,7 +30,7 @@
     <h1>Home</h1>
     <div>
       <button type="button" class="btn btn-primary" onclick="toggleTheme()"><i class="bi bi-moon color-theme-icon"></i></button>
-      <button type="button" class="btn btn-primary" onclick="localStorage['songs']='[]';window.location.reload();"><i class="bi bi-trash3"></i></button>
+      <button type="button" class="btn btn-primary" onclick="localStorage['songs']='[]';window.location.reload();"><i class="bi bi-radioactive"></i></button>
       <button type="button" class="btn btn-primary" onclick="setPage('import.html')"><i class="bi bi-plus-lg"></i></button>
     </div>
   </div>
@@ -66,8 +66,8 @@
           '<tr><td><a href="' +
           myUrlWithParams +
           '" target="_blank">' +
-          element.meta.name +
-          "</a></td><td>" + element.meta.artist + "</td><td>" +
+          element.tabName +
+          "</a></td><td>" + element.artist + "</td><td>" +
           (JSON.stringify(element).length / 1024).toFixed(1) +
           " KB</td></tr>";
       });
