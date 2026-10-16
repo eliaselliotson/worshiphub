@@ -17,13 +17,11 @@ export class SlidesCanvas {
   slideScale = 0.5;
   fontSize = 96;
   brightnessFilter;
-  showChords;
   frame = 0;
 
-  constructor(songData, showChords=true) {
+  constructor(songData) {
 
     // Initialize the class
-    this.showChords = showChords;
     this.app = new PIXI.Application({ background: '#232323', antialias: true, resizeTo: window });
     this.initFonts();
     this.initBackground("../img/bg.mp4");
@@ -45,6 +43,9 @@ export class SlidesCanvas {
       // this.backgroundTint.hue(this.frame / 5);
       this.frame++;
     })
+
+    // Enable devtools :D
+    window.__PIXI_DEVTOOLS__ = { app: this.app };
   }
 
   setScale(scale) {
@@ -93,8 +94,8 @@ export class SlidesCanvas {
       fontSize: this.fontSize * 0.75,
       fontStyle: 'normal',
       fontWeight: '900',
-      fill: '#eeeeee',
-      dropShadow: { color: 0xff0000 }
+      fill: '#eeeeee00',
+      //dropShadow: { color: 0xff0000 }
     });
     
     this.fontStyles.hud = new PIXI.TextStyle({
@@ -202,27 +203,23 @@ export class SlidesCanvas {
       lines.push(...slide)
     }
 
-    console.log(lines);
-
     for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
       const lyrics = new PIXI.Text(lines[lineIndex].text, this.fontStyles.lyrics);
 
       lyrics.anchor.x = 0.5;
 
       lyrics.x = 0;
-      lyrics.y = (lineIndex * (this.fontSize * ((6 + (this.showChords * 2)) / 3))) + (this.fontSize * (4 / 3));
+      lyrics.y = (lineIndex * (this.fontSize * 1.5));
       slide.addChild(lyrics);
 
-      if (this.showChords) {
-        for (let chord of lines[lineIndex].chords) {
-          // Ignore extraneous chords
-          if (chord.pos > lines[lineIndex].text.length) {
-            continue;
-          }
-
-          const chordDisplay = this.createChordOnSlide(chord, slide, lines[lineIndex].text);
-          chordDisplay.position.y = lineIndex * (this.fontSize * (8 / 3));
+      for (let chord of lines[lineIndex].chords) {
+        // Ignore extraneous chords
+        if (chord.pos > lines[lineIndex].text.length) {
+          continue;
         }
+
+        const chordDisplay = this.createChordOnSlide(chord, slide, lines[lineIndex].text);
+        chordDisplay.position.y = lineIndex * (this.fontSize * 1.5);
       }
     }
 
