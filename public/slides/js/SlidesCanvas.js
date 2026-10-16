@@ -116,7 +116,7 @@ export class SlidesCanvas {
 
   initSlides(songData) {
     for (let i = 0; i < songData.separators.length - 1; i++) {
-      const lines = songData.lyrics.slice(songData.separators[i], songData.separators[i + 1])
+      const lines = songData.content.slice(songData.separators[i], songData.separators[i + 1])
       const slide = this.createSlide(lines);
 
       this.slides.push(slide);
@@ -171,7 +171,7 @@ export class SlidesCanvas {
   }
 
   createChord(chordData) {
-    const chordText = new PIXI.Text(chordData.chord, this.fontStyles.chords);
+    const chordText = new PIXI.Text(chordData.text, this.fontStyles.chords);
 
     chordText.position.y = (this.fontSize / 12) + (this.fontSize * 0.3);
 
@@ -186,7 +186,7 @@ export class SlidesCanvas {
 
     container.addChild(chordText);
 
-    container.position.x = width(lyric.slice(0, chord.index), { family: 'Figtree', size: this.fontSize, weight: 'bold' }) - width(lyric, { family: 'Figtree', size: this.fontSize, weight: 'bold' }) / 2;
+    container.position.x = width(lyric.slice(0, chord.pos), { family: 'Figtree', size: this.fontSize, weight: 'bold' }) - width(lyric, { family: 'Figtree', size: this.fontSize, weight: 'bold' }) / 2;
 
     slide.addChild(container);
 
@@ -196,8 +196,16 @@ export class SlidesCanvas {
   createSlide(slideData) {
     const slide = new PIXI.Container();
 
-    for (let lineIndex = 0; lineIndex < slideData.length; lineIndex++) {
-      const lyrics = new PIXI.Text(slideData[lineIndex].lyrics, this.fontStyles.lyrics);
+    let lines = [];
+
+    for (let slide of slideData) {
+      lines.push(...slide)
+    }
+
+    console.log(lines);
+
+    for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+      const lyrics = new PIXI.Text(lines[lineIndex].text, this.fontStyles.lyrics);
 
       lyrics.anchor.x = 0.5;
 
@@ -206,13 +214,13 @@ export class SlidesCanvas {
       slide.addChild(lyrics);
 
       if (this.showChords) {
-        for (let chord of slideData[lineIndex].chords) {
+        for (let chord of lines[lineIndex].chords) {
           // Ignore extraneous chords
-          if (chord.index > slideData[lineIndex].lyrics.length) {
+          if (chord.pos > lines[lineIndex].text.length) {
             continue;
           }
 
-          const chordDisplay = this.createChordOnSlide(chord, slide, slideData[lineIndex].lyrics);
+          const chordDisplay = this.createChordOnSlide(chord, slide, lines[lineIndex].text);
           chordDisplay.position.y = lineIndex * (this.fontSize * (8 / 3));
         }
       }

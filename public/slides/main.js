@@ -14,7 +14,7 @@ document.body.appendChild(slides.canvas)
 slides.setBrightness(brightness);
 
 // Set the title of the window based off the song name and artis
-document.title = `${song.meta.name} by ${song.meta.artist} | Benton Youth Lyrics`
+document.title = `${song.tabName} by ${song.artist} | Benton Youth Lyrics`
 
 // Create slide control functions
 function nextSlide() {
