@@ -84,7 +84,7 @@
 
       // Synchronous loading function
       async function loadFile(path) {
-        return await (await fetch(`https://cors-anywhere.herokuapp.com/${path}`)).text();
+        return await (await fetch(`https://backend.worshiphubcloud.workers.dev/import?url=${encodeURIComponent(path)}`)).json();
       }
 
       function verifyTextbox() {
@@ -132,13 +132,7 @@
         showLoader();
 
         if (verifyTextbox()) {
-          data = parse(
-            await loadFile(document.getElementById('import-url-textbox').value)
-          );
-
-          for (let i = 0; i < data.separators.length; i++) {
-            data.separators[i] = Math.floor(data.separators[i]);
-          }
+          data = await loadFile(document.getElementById('import-url-textbox').value)
           updateDom();
         }
 
@@ -147,17 +141,30 @@
 
       async function updateDom() {
         let previewHTML = '<section class="card card-body bg-light-subtle">';
-        for (let i = 0; i < data.lyrics.length; i++) {
+        for (let i = 0; i < data.content.length; i++) {
           if (data.separators.includes(i) && i !== 0) {
             previewHTML +=
               '</section><section class="card card-body bg-light-subtle">';
           }
+
+          // Put the chords into the song text
+          let songLyric = "";
+
+          for (let line of data.content[i]) {
+            let text = line.text;
+
+            for (let chordIndex = 0; chordIndex < line.chords.length; chordIndex++) {
+              const chord = line.chords[chordIndex];
+
+              text = text.slice(0, chord.pos + 7 * chordIndex) + `<b>` + chord.text + `</b>` + text.slice(chord.pos + chord.text.length + 7 * chordIndex, -1);
+            }
+
+            songLyric += `<span>${text}</span><br/>`.split(' ').join('&nbsp;');
+          }
+
           previewHTML +=
             `<span id="verse-${i}">
-              <strong>${data.lyrics[i].chordLyrics.split(' ').join('&nbsp;')}</strong>
-              <br>
-              ${data.lyrics[i].lyrics.split(' ').join('&nbsp;')}
-              <br><hr>
+              ${songLyric}<hr/>
             </span>`;
         }
         previewHTML += '</section>';
@@ -165,8 +172,8 @@
         document.getElementById('content').innerHTML =
           `<div class="meta w-100 d-flex flex-row align-items-center justify-content-between px-2">
             <div>
-              <h1>${data.meta.name}</h1>
-              <p>By ${data.meta.artist}</p>
+              <h1>${data.tabName}</h1>
+              <p>By ${data.artist}</p>
             </div>
             <div><button type="button" class="btn btn-primary" onclick="addSong();">Import <i class="bi bi-arrow-right"></i></button></div>
           </div>
@@ -174,7 +181,7 @@
             ${previewHTML}
           </div>`;
 
-        for (let i = 0; i < data.lyrics.length; i++) {
+        for (let i = 0; i < data.content.length; i++) {
           document
             .getElementById('verse-' + i)
             .addEventListener('click', () => {
