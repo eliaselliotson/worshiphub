@@ -5,6 +5,8 @@ export function getCurrentSong() {
   const songIndex = Number(urlParameters.get("i"));
   const songData = songList[songIndex];
 
+  songData.separators.unshift(0);
+
   return songData;
 }
 

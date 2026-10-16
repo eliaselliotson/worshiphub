@@ -94,8 +94,8 @@ export class SlidesCanvas {
       fontSize: this.fontSize * 0.75,
       fontStyle: 'normal',
       fontWeight: '900',
-      fill: '#eeeeee00',
-      //dropShadow: { color: 0xff0000 }
+      fill: '#eeeeee',
+      dropShadow: { color: 0xff0000 }
     });
     
     this.fontStyles.hud = new PIXI.TextStyle({
@@ -214,11 +214,11 @@ export class SlidesCanvas {
 
       for (let chord of lines[lineIndex].chords) {
         // Ignore extraneous chords
-        if (chord.pos > lines[lineIndex].text.length) {
+        if (chord.pos > lines[lineIndex + 1].text.length) {
           continue;
         }
 
-        const chordDisplay = this.createChordOnSlide(chord, slide, lines[lineIndex].text);
+        const chordDisplay = this.createChordOnSlide(chord, slide, lines[lineIndex + 1].text);
         chordDisplay.position.y = lineIndex * (this.fontSize * 1.5);
       }
     }
