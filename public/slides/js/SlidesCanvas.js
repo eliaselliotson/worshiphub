@@ -116,7 +116,7 @@ export class SlidesCanvas {
   }
 
   initSlides(songData) {
-    for (let i = 0; i < songData.separators.length - 1; i++) {
+    for (let i = 0; i < songData.separators.length; i++) {
       const lines = songData.content.slice(songData.separators[i], songData.separators[i + 1])
       const slide = this.createSlide(lines);
 
